@@ -1,26 +1,35 @@
 package com.example.mayankverma.locationexchange;
 
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RiderHomeActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
+public class RiderHomeActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener, FragmentManager.OnBackStackChangedListener {
 
     private Spinner mChooseOrderSpinner;
     public static final String ORDER_ID_CHOOSEN = "order_id_choosen";
+    public static final String SELECTED_LANDMARK = "selected_landmark";
     private LinearLayout mBtnLl;
     private Button mHelpBtn;
     private Button mDeliveredBtn;
+    private ScrollView mFragContainer;
+    private LinearLayout mMainActivityLl;
+    private RelativeLayout mSbmtLandRl;
+    private Button mSubLandMark;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +60,12 @@ public class RiderHomeActivity extends AppCompatActivity implements AdapterView.
         mHelpBtn.setOnClickListener(this);
         mDeliveredBtn.setOnClickListener(this);
 
+        mFragContainer = (ScrollView) findViewById(R.id.frag_container);
+        mMainActivityLl = (LinearLayout) findViewById(R.id.main_activity_ll);
+
+        mSbmtLandRl = (RelativeLayout) findViewById(R.id.submit_landmark);
+        mSubLandMark = (Button) findViewById(R.id.submit_landmark_btn);
+        mSubLandMark.setOnClickListener(this);
     }
 
     @Override
@@ -59,6 +74,8 @@ public class RiderHomeActivity extends AppCompatActivity implements AdapterView.
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(ORDER_ID_CHOOSEN, String.valueOf(1865297));
+
+        mBtnLl.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -71,12 +88,52 @@ public class RiderHomeActivity extends AppCompatActivity implements AdapterView.
         switch (v.getId()) {
             case R.id.help:
                 //Launch the other fragment
+                loadFragment();
                 break;
             case R.id.delivered:
                 //Launch the other fragment
+                showLandMarkView();
+                break;
+            case R.id.submit_landmark_btn:
+                postLandMarkData();
                 break;
             default:
                 return;
         }
+    }
+
+    private void postLandMarkData() {
+
+    }
+
+    private void showLandMarkView() {
+        mSbmtLandRl.setVisibility(View.VISIBLE);
+        mBtnLl.setVisibility(View.GONE);
+    }
+
+    private void callApiToPostLatLong() {
+
+    }
+
+    private void loadFragment() {
+        mFragContainer.setVisibility(View.VISIBLE);
+        LandMarkChooserFragment fragment = (LandMarkChooserFragment) getSupportFragmentManager().findFragmentByTag(LandMarkChooserFragment.TAG);
+        if (fragment == null) {
+            fragment = new LandMarkChooserFragment();
+            FragmentManager fm = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fm.beginTransaction();
+            fragmentTransaction.replace(R.id.frag_container, fragment, LandMarkChooserFragment.TAG)
+                    .addToBackStack(null).commitAllowingStateLoss();
+        }
+    }
+
+    @Override
+    public void onBackStackChanged() {
+        int canPop = getSupportFragmentManager().getBackStackEntryCount();
+        if (canPop > 0) {
+            mFragContainer.setVisibility(View.GONE);
+            getSupportFragmentManager().popBackStack();
+        }
+
     }
 }

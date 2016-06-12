@@ -8,51 +8,96 @@
     android:padding="@dimen/activity_vertical_margin"
     tools:context="com.example.mayankverma.locationexchange.RiderHomeActivity">
 
-    <TextView
-        android:id="@+id/welcome_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Welcome to Rider App !!"
-        android:textColor="@android:color/holo_red_dark"
-        android:textSize="30sp"/>
-
-    <TextView
-        android:id="@+id/choose_order_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:text="Please choose options -:"
-        android:textSize="22sp"/>
-
-    <Spinner
-        android:id="@+id/choose_order_spinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </Spinner>
-
-
     <LinearLayout
-        android:id="@+id/btns_ll"
+        android:id="@+id/main_activity_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:orientation="horizontal"
-        android:visibility="gone">
+        android:orientation="vertical">
 
-        <Button
-            android:id="@+id/help"
+        <TextView
+            android:id="@+id/welcome_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Help?"/>
+            android:text="Welcome to Rider App !!"
+            android:textColor="@android:color/holo_red_dark"
+            android:textSize="30sp"/>
 
-        <Button
-            android:id="@+id/delivered"
+        <TextView
+            android:id="@+id/choose_order_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_weight="1"
-            android:text="Delivered?"/>
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:text="Please choose options -:"
+            android:textSize="22sp"/>
+
+        <Spinner
+            android:id="@+id/choose_order_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </Spinner>
+
+
+        <LinearLayout
+            android:id="@+id/btns_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <Button
+                android:id="@+id/help"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Help?"/>
+
+            <Button
+                android:id="@+id/delivered"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_weight="1"
+                android:text="Delivered?"/>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/submit_landmark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/give_landmark_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Would you like to share some landmark which will help fellow riders to reach destination easily? "
+                android:textColor="@android:color/holo_red_dark"
+                android:textSize="16sp"/>
+
+            <EditText
+                android:id="@+id/enter_landmark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/give_landmark_tv"
+                android:hint="enter landmark here"/>
+
+            <Button
+                android:id="@+id/submit_landmark_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/enter_landmark"
+                android:text="submit"/>
+
+        </RelativeLayout>
 
     </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/frag_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+    </ScrollView>
 </LinearLayout>
